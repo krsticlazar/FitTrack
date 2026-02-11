@@ -26,26 +26,6 @@ FitTrack je moderna web aplikacija za praćenje treninga i napretka u teretani. 
 - **Axios** - HTTP client
 - **React Router** - Navigacija
 
-## 📁 Struktura Projekta
-
-```
-FitTrack/
-├── server/
-│   ├── db/              # MongoDB konekcija
-│   ├── middleware/      # Auth middleware
-│   ├── routes/          # API rute
-│   ├── utils/           # Pomoćne funkcije
-│   └── index.js         # Server entry point
-├── app/
-│   ├── src/
-│   │   ├── components/  # React komponente
-│   │   ├── context/     # Context API
-│   │   ├── pages/       # Stranice
-│   │   ├── services/    # API servisi
-│   │   └── App.tsx      # Root komponenta
-│   └── public/
-└── .env                 # Environment varijable
-```
 
 ## 📊 MongoDB Modeli
 
@@ -148,7 +128,7 @@ Fajl `.env` je već kreiran sa MongoDB Atlas connection stringom. Ako želite da
 ./init-database.sh
 
 # Windows (ručno)
-mongosh "mongodb+srv://fittrack:84M0IBhBVxfn2ltb@cluster0.0p7cyw3.mongodb.net/fittrack" --file server/db/init-db.js
+mongosh ...[pristup poslat u opisu projekta]
 ```
 
 Ovo će kreirati:
