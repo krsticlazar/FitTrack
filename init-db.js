@@ -1,7 +1,6 @@
 // FitTrack init script (mongosh)
 // Učitavanje:
-// mongosh "mongodb+srv://cluster0.0p7cyw3.mongodb.net/fittrack" --apiVersion 1 --username fittrack --file init-db.js
-
+// mongosh ... pogledati .env fajl 
 print("=== FitTrack Database Initialization ===\n");
 
 // izaberi bazu kao JS objekat

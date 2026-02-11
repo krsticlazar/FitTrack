@@ -180,7 +180,7 @@ Možete testirati konekciju i videti podatke u MongoDB Atlas:
 
 ```bash
 # Konektuj se na bazu
-mongosh "mongodb+srv://fittrack:84M0IBhBVxfn2ltb@cluster0.0p7cyw3.mongodb.net/fittrack"
+mongosh ...
 
 # Komande za proveru
 use fittrack
