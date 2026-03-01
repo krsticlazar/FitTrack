@@ -2,14 +2,10 @@
   "name": "fittrack",
   "version": "1.0.0",
   "description": "FitTrack - Web aplikacija za praćenje vežbi i napretka u teretani",
-  "main": "server/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js",
-    "client": "cd app && npm start",
-    "server": "nodemon server/index.js",
-    "build": "cd app && npm run build",
-    "install-all": "npm install && cd app && npm install"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [
     "fitness",

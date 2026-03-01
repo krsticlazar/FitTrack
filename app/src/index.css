@@ -23,13 +23,19 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Segoe UI', 'Noto Sans', 'Roboto', 'Ubuntu', 'Cantarell', 'Helvetica Neue',
+    Arial, 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-main);
   color: var(--text-main);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 code {
@@ -74,4 +80,3 @@ input:focus {
 a:hover {
   color: var(--accent) !important;
 }
-

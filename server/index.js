@@ -1,8 +1,17 @@
-require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
+const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./db/connection');
 const errorHandler = require('./middleware/errorHandler');
+
+const envPath = [
+  path.resolve(__dirname, '.env'),
+  path.resolve(__dirname, '../.env')
+].find((candidate) => fs.existsSync(candidate));
+
+dotenv.config(envPath ? { path: envPath } : undefined);
 
 // Import ruta
 const authRoutes = require('./routes/auth');

@@ -200,7 +200,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ template, onClose, onSave }
                             onClick={() => setSelectedExercise(ex.exerciseId)}
                             style={styles.infoBtn}
                           >
-                            ℹ️
+                            ℹ
                           </button>
                           <button
                             type="button"
@@ -289,7 +289,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ template, onClose, onSave }
                       onClick={() => removeExercise(index)}
                       style={styles.removeBtn}
                     >
-                      🗑️
+                      🗑
                     </button>
                   </div>
                 ))}
@@ -615,6 +615,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 export default TemplateForm;
+
 
 
 

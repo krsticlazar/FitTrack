@@ -10,6 +10,7 @@ import type {
   ExerciseStats,
   PersonalRecord
 } from '../types';
+import { toStringArray } from '../utils/toStringArray';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
@@ -53,18 +54,6 @@ class ApiService {
     );
   }
 
-  private toStringArray(value: unknown): string[] {
-    if (Array.isArray(value)) {
-      return value.filter((item): item is string => typeof item === 'string');
-    }
-
-    if (typeof value === 'string') {
-      return [value];
-    }
-
-    return [];
-  }
-
   private normalizeExercise(rawExercise: any): Exercise {
     const source = rawExercise?.data || rawExercise || {};
 
@@ -72,11 +61,11 @@ class ApiService {
       exerciseId: source.exerciseId || '',
       name: source.name || '',
       gifUrl: source.gifUrl || '',
-      targetMuscles: this.toStringArray(source.targetMuscles),
-      bodyParts: this.toStringArray(source.bodyParts),
-      equipments: this.toStringArray(source.equipments),
-      secondaryMuscles: this.toStringArray(source.secondaryMuscles),
-      instructions: this.toStringArray(source.instructions)
+      targetMuscles: toStringArray(source.targetMuscles),
+      bodyParts: toStringArray(source.bodyParts),
+      equipments: toStringArray(source.equipments),
+      secondaryMuscles: toStringArray(source.secondaryMuscles),
+      instructions: toStringArray(source.instructions)
     };
   }
 

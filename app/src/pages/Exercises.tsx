@@ -86,9 +86,6 @@ const Exercises: React.FC = () => {
                     </span>
                   ))}
                 </div>
-                {/* <div style={styles.exerciseEquipment}>
-                  🏋️ {(exercise.equipments || []).join(', ')}
-                </div> */}
               </div>
             ))}
           </div>
@@ -192,14 +189,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: 'var(--accent-text)',
     borderRadius: '12px',
     fontSize: '0.85rem'
-  },
-  exerciseEquipment: {
-    color: 'var(--text-muted)',
-    fontSize: '0.9rem'
   }
 };
 
 export default Exercises;
-
-
-

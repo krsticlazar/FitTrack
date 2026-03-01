@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import type { Exercise } from '../types';
+import { toStringArray } from '../utils/toStringArray';
 
 interface ExerciseCardProps {
   exerciseId: string;
   onClose: () => void;
 }
-
-const toStringArray = (value: unknown): string[] => {
-  if (Array.isArray(value)) {
-    return value.filter((item): item is string => typeof item === 'string');
-  }
-  if (typeof value === 'string') {
-    return [value];
-  }
-  return [];
-};
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exerciseId, onClose }) => {
   const [exercise, setExercise] = useState<Exercise | null>(null);
@@ -304,6 +295,3 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 export default ExerciseCard;
-
-
-

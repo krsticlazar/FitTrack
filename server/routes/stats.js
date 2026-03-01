@@ -103,8 +103,10 @@ router.get('/exercise/:exerciseId', protect, async (req, res, next) => {
       
       if (!exercise) return null;
 
+      const sets = Array.isArray(exercise.sets) ? exercise.sets : [];
+      if (sets.length === 0) return null;
+
       // Kalkulacija za ovu sesiju
-      const sets = exercise.sets;
       const sessionMaxWeight = Math.max(...sets.map(s => s.weight));
       const sessionMaxReps = Math.max(...sets.map(s => s.reps));
       const sessionVolume = sets.reduce((sum, set) => sum + (set.weight * set.reps), 0);
@@ -137,6 +139,18 @@ router.get('/exercise/:exerciseId', protect, async (req, res, next) => {
       };
     }).filter(h => h !== null);
 
+    if (history.length === 0) {
+      return res.json({
+        success: true,
+        data: {
+          exerciseId,
+          hasData: false,
+          personalRecord: null,
+          history: []
+        }
+      });
+    }
+
     res.json({
       success: true,
       data: {
@@ -148,8 +162,8 @@ router.get('/exercise/:exerciseId', protect, async (req, res, next) => {
           maxReps,
           prSession
         },
-        totalSessions: sessions.length,
-        history: history.slice(0, 10) // Poslednih 10 sesija
+        totalSessions: history.length,
+        history: history.slice(0, 10) // Poslednjih 10 sesija
       }
     });
   } catch (error) {
@@ -273,3 +287,6 @@ router.get('/records', protect, async (req, res, next) => {
 });
 
 module.exports = router;
+
+
+

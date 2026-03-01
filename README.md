@@ -1,258 +1,87 @@
-# FitTrack - Web Aplikacija za Praćenje Vežbi
+# FitTrack
 
-FitTrack je moderna web aplikacija za praćenje treninga i napretka u teretani. Korisnici mogu kreirati personalizovane workout šablone koristeći eksternu bazu vežbi, logirati svoje sesije treninga sa detaljima o težini i ponavljanjima, i pratiti svoj napredak tokom vremena.
+## O projektu
+FitTrack je web aplikacija za pracenje treninga i napretka u teretani.
 
-## 🎯 Funkcionalnosti
+Aplikacija omogucava:
+- registraciju i prijavu korisnika
+- pretragu vezbi preko ExerciseDB API-ja
+- kreiranje workout sablona
+- pokretanje i pracenje workout sesija
+- cuvanje setova, tezina i ponavljanja
+- pregled istorije treninga i osnovnih statistika
 
-- **Autentifikacija korisnika** - Registracija i login sa JWT tokenima
-- **Eksterna baza vežbi** - Integracija sa ExerciseDB API-jem za pristup bazi od 1000+ vežbi
-- **Workout Templates** - Kreiranje personalizovanih šablona treninga
-- **Workout Sessions** - Logovanje realnih sesija treninga sa detaljima o setovima
-- **Praćenje napretka** - Uvid u istoriju treninga, volumene i rekorde
-- **Fleksibilna MongoDB šema** - Prilagođena struktura za različite tipove vežbi
+Tehnologije koje su koriscene:
+- Backend: Node.js, Express, Mongoose, JWT
+- Frontend: React, TypeScript, React Router
+- Baza: MongoDB Atlas
+- HTTP klijent: Axios
 
-## 🏗️ Tehnologije
+## Preduslovi
+Pre pokretanja potrebno je da budu instalirani:
+- Node.js LTS (sa npm)
+- Internet konekcija, zato sto backend koristi MongoDB Atlas i ExerciseDB API
 
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - NoSQL baza podataka (MongoDB Atlas)
-- **Mongoose** - ODM za MongoDB
-- **JWT** - Autentifikacija
+Sve skripte pokretati kao administrator (Run as administrator).
 
-### Frontend
-- **React** - UI library
-- **TypeScript** - Type-safe JavaScript
-- **Axios** - HTTP client
-- **React Router** - Navigacija
+## Konfiguracija
+U repozitorijumu se nalazi fajl `server/.env.example`.
 
+Potrebno je:
+1. Preimenovati fajl `server/.env.example` u `server/.env`
+2. Popuniti `MONGODB_URI` vrednost
 
-## 📊 MongoDB Modeli
+Ostale vrednosti u `.env.example` su vec postavljene.
 
-### User
-```javascript
-{
-  _id: ObjectId,
-  username: String,
-  email: String,
-  password: String (hashed),
-  createdAt: Date
-}
+Za connection string javiti se na:
+`krsticlazar@elfak.rs`
+
+## Pokretanje projekta (prvi put)
+1. Podesiti `server/.env`
+
+Preimenovati fajl `server/.env.example` u `server/.env` i popuniti `MONGODB_URI`.
+
+Za connection string javiti se na:
+`krsticlazar@elfak.rs`
+
+2. Pokrenuti `scripts\install-environment.cmd`
+
+Skripta otvara dva administratorska CMD prozora:
+- jedan ulazi u `server` i radi `npm install`
+- drugi ulazi u `app` i radi `npm install`
+
+Ako instalacija prodje uspesno, prozori se automatski zatvaraju.
+Ako dodje do greske, prozor ostaje otvoren da moze da se vidi poruka.
+
+3. Pokrenuti `scripts\start-project.cmd`
+
+Skripta otvara dva administratorska CMD prozora:
+- jedan ulazi u `server` i pokrece `npm run dev`
+- drugi ulazi u `app` i pokrece `npm start`
+
+## Adrese
+Frontend: `http://localhost:3000`
+API: `http://localhost:5000`
+Health check: `http://localhost:5000/health`
+
+## Sledeca pokretanja
+Kada je projekat jednom podesen, za sledece pokretanje je u praksi dovoljno:
+
+```cmd
+scripts\start-project.cmd
 ```
 
-### WorkoutTemplate
-```javascript
-{
-  _id: ObjectId,
-  userId: ObjectId (ref: User),
-  name: String,
-  exercises: [
-    {
-      exerciseId: String,
-      name: String,
-      gifUrl: String,
-      targetMuscles: [String],
-      sets: Number,
-      defaultWeight: Number
-    }
-  ],
-  createdAt: Date,
-  updatedAt: Date
-}
-```
 
-### WorkoutSession
-```javascript
-{
-  _id: ObjectId,
-  userId: ObjectId (ref: User),
-  templateId: ObjectId (ref: WorkoutTemplate),
-  templateName: String,
-  status: String (active/completed),
-  startTime: Date,
-  endTime: Date,
-  exercises: [
-    {
-      exerciseId: String,
-      name: String,
-      sets: [
-        {
-          setNumber: Number,
-          weight: Number,
-          reps: Number,
-          isPersonalRecord: Boolean
-        }
-      ]
-    }
-  ],
-  totalVolume: Number,
-  duration: Number,
-  notes: String
-}
-```
+## Test podaci
+Ako je baza vec podesena i povezana preko dostavljenog `MONGODB_URI`, mogu da se koriste sledeci test nalozi:
 
-## 🚀 Instalacija i Pokretanje
+1. Korisnik:
+email: `marko@fittrack.com`
+password: `password123`
 
-### Preduslovi
-- Node.js (v14 ili noviji)
-- npm ili yarn
-- MongoDB Shell (mongosh) - za inicijalizaciju baze
+2. Korisnik:
+email: `ana@fittrack.com`
+password: `password123`
 
-### 1. Instalacija zavisnosti
-
-```bash
-# U root direktorijumu
-npm install
-
-# U app direktorijumu
-cd app
-npm install
-cd ..
-```
-
-**ILI** koristi skriptu:
-```bash
-npm run install-all
-```
-
-### 2. Environment Setup
-
-Fajl `.env` je već kreiran sa MongoDB Atlas connection stringom. Ako želite da koristite drugu bazu, promenite `MONGODB_URI`.
-
-### 3. Inicijalizacija Baze Podataka
-
-**VAŽNO:** Pre prvog pokretanja, potrebno je popuniti bazu sa test podacima.
-
-```bash
-# Linux/Mac
-./init-database.sh
-
-# Windows (ručno)
-mongosh ...[pristup poslat u opisu projekta]
-```
-
-Ovo će kreirati:
-- 2 test korisnika (marko i ana)
-- 4 workout template-a
-- 4 workout session-a (uključujući 1 aktivnu sesiju)
-- Sve potrebne indekse
-
-**Test nalozi:**
-- Email: `marko@fittrack.com` | Password: `password123`
-- Email: `ana@fittrack.com` | Password: `password123`
-
-### 4. Pokretanje Aplikacije
-
-#### Pokreni Backend (Terminal 1)
-
-```bash
-# Development mod sa auto-reload
-npm run dev
-
-# Ili production
-npm start
-```
-
-Server će biti dostupan na `http://localhost:5000`
-
-#### Pokreni Frontend (Terminal 2)
-
-```bash
-cd app
-npm start
-```
-
-React aplikacija će biti dostupna na `http://localhost:3000`
-
-### 5. Provera Funkcionalnosti
-
-1. Otvori `http://localhost:3000`
-2. Klikni na "Prijavi se"
-3. Koristi test nalog: `marko@fittrack.com` / `password123`
-4. Istraži aplikaciju:
-   - **Početna**: Vidi statistike i istoriju
-   - **Vežbe**: Pretraži bazu vežbi po mišićnim grupama
-   - **Moji Treninzi**: Vidi šablone i pokreni sesiju
-
-## 📋 Verifikacija MongoDB Konekcije
-
-Možete testirati konekciju i videti podatke u MongoDB Atlas:
-
-```bash
-# Konektuj se na bazu
-mongosh ...
-
-# Komande za proveru
-use fittrack
-show collections
-db.users.find().pretty()
-db.workouttemplates.find().pretty()
-db.workoutsessions.find().pretty()
-```
-
-## 🛠️ Development Scripts
-
-```bash
-# Root direktorijum
-npm run dev          # Pokreni server sa nodemon
-npm start            # Pokreni server u production modu
-npm run client       # Pokreni samo React app
-npm run install-all  # Instaliraj sve zavisnosti
-
-# App direktorijum (cd app)
-npm start            # Development server
-npm run build        # Build za production
-npm test             # Pokreni testove
-```
-
-## 🔌 API Endpoints
-
-### Auth
-- `POST /api/auth/register` - Registracija korisnika
-- `POST /api/auth/login` - Login korisnika
-- `GET /api/auth/me` - Provera autentifikacije
-
-### Exercise (External API Proxy)
-- `GET /api/exercises/search?name=...` - Pretraga vežbi po imenu
-- `GET /api/exercises/bodypart/:bodypart` - Vežbe po mišićnoj grupi
-- `GET /api/exercises/:id` - Detalji o vežbi
-
-### Workout Templates
-- `GET /api/templates` - Lista svih šablona korisnika
-- `POST /api/templates` - Kreiranje novog šablona
-- `GET /api/templates/:id` - Detalji šablona
-- `PUT /api/templates/:id` - Izmena šablona
-- `DELETE /api/templates/:id` - Brisanje šablona
-
-### Workout Sessions
-- `GET /api/sessions` - Lista svih sesija korisnika
-- `POST /api/sessions` - Pokretanje nove sesije
-- `GET /api/sessions/active` - Trenutno aktivna sesija
-- `PUT /api/sessions/:id` - Ažuriranje sesije
-- `POST /api/sessions/:id/complete` - Završavanje sesije
-- `DELETE /api/sessions/:id` - Brisanje sesije
-
-### Stats
-- `GET /api/stats/overview` - Opšte statistike
-- `GET /api/stats/exercise/:exerciseId` - Statistika za vežbu (rekord)
-- `GET /api/stats/history` - Istorija treninga
-
-## 🗄️ MongoDB Konekcija
-
-Aplikacija koristi MongoDB Atlas cloud rešenje. Connection string se nalazi u `.env` fajlu.
-
-## 🔐 Autentifikacija
-
-Aplikacija koristi JWT (JSON Web Token) za autentifikaciju. Token se čuva u localStorage na frontendu i šalje u Authorization header-u za svaki zaštićeni API poziv.
-
-## 📝 Napomene za Projekat
-
-- **Hibridni pristup modeliranja** - Kombinacija ugnježdenih dokumenata i referenci
-- **Indeksi** - Kreirati indekse na `userId`, `templateId`, `status` za optimizaciju
-- **Validacija** - Mongoose schema validation sa custom validatorima
-- **Agregacija** - Korišćenje Aggregation Framework za statistike i analitiku
-- **TTL indeksi** - Za automatsko brisanje starih sesija ako je potrebno
-
-## 👨‍💻 Autor
-
-Projekat za kurs Napredne Baze Podataka
+## Napomena
+Projekat je uradjen kao obaveza na predmetu Napredne baze podataka.

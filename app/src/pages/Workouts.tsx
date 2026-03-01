@@ -149,14 +149,14 @@ const Workouts: React.FC = () => {
                       style={styles.iconBtn}
                       title="Izmeni"
                     >
-                      ✏️
+                      ✎
                     </button>
                     <button
                       onClick={() => handleDeleteTemplate(template._id, template.name)}
                       style={styles.iconBtn}
                       title="Obriši"
                     >
-                      🗑️
+                      🗑
                     </button>
                   </div>
                 </div>
@@ -194,7 +194,7 @@ const Workouts: React.FC = () => {
                     ...(activeSession ? styles.btnDisabled : {})
                   }}
                 >
-                  {activeSession ? '▶️ Sesija aktivna' : '▶️ Pokreni trening'}
+                  {activeSession ? '▶ Sesija aktivna' : '▶ Pokreni trening'}
                 </button>
               </div>
             ))}
@@ -440,6 +440,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 export default Workouts;
+
 
 
 

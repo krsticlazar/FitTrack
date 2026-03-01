@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Exercises from './pages/Exercises';
 import Workouts from './pages/Workouts';
 import ActiveSession from './pages/ActiveSession';
+import { cardPatternStyle } from './styles/cardPattern';
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
@@ -73,6 +74,7 @@ const App: React.FC = () => {
 
 const styles: { [key: string]: React.CSSProperties } = {
   app: {
+    ...cardPatternStyle,
     minHeight: '100vh',
     backgroundColor: 'var(--bg-main)'
   },
